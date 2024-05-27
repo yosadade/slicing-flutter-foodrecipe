@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/constants.dart';
+import 'package:foodrecipeapp/models/category.dart';
+import 'package:foodrecipeapp/models/food.dart';
+import 'package:foodrecipeapp/widgets/categories.dart';
 import 'package:foodrecipeapp/widgets/home_appbar.dart';
+import 'package:foodrecipeapp/widgets/home_search_bar.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,38 +15,96 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String currentCat = 'All';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HomeAppbar(),
-              const SizedBox(
+              HomeAppbar(),
+              SizedBox(
+                height: 20,
+              ),
+              HomeSearchBar(),
+              SizedBox(
                 height: 20,
               ),
               Container(
                 width: double.infinity,
+                height: 170,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                    borderRadius: BorderRadius.circular(15),
+                    image: const DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage('assets/images/explore.png'))),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Categories',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Categories(currentCat: currentCat),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Quick & Fast",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(color: kprimaryColor),
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    Icon(Iconsax.search_normal),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
-                      ),
-                    )
-                  ],
+                  children: List.generate(
+                      foods.length,
+                      (index) => Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            width: 200,
+                            child: Stack(
+                              children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: 130,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  foods[index].image),
+                                              fit: BoxFit.fill)),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )),
                 ),
               )
             ],
