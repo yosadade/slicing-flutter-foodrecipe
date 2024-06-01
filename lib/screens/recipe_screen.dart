@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodrecipeapp/constants.dart';
 import 'package:foodrecipeapp/models/food.dart';
+import 'package:foodrecipeapp/widgets/food_counter.dart';
 import 'package:iconsax/iconsax.dart';
 
 class RecipeScreen extends StatefulWidget {
@@ -12,10 +14,42 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+  int currentNumber = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Expanded(
+                flex: 6,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: kprimaryColor,
+                      foregroundColor: Colors.white),
+                  child: const Text('Start Cooking'),
+                )),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: IconButton(
+              onPressed: () {},
+              style: IconButton.styleFrom(
+                  shape: CircleBorder(
+                      side: BorderSide(color: Colors.grey.shade300, width: 2))),
+              icon: Icon(
+                widget.food.isLiked ? Iconsax.heart5 : Iconsax.heart,
+                color: widget.food.isLiked ? Colors.red : Colors.black,
+                size: 20,
+              ),
+            ))
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +71,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     child: Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             style: IconButton.styleFrom(
                                 backgroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
@@ -174,26 +210,121 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         ],
                       ),
                       const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2.5, color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(25)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                                onPressed: () {}, icon: Icon(Iconsax.minus)),
-                            Text(
-                              '1',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                                onPressed: () {}, icon: Icon(Iconsax.add)),
-                          ],
-                        ),
+                      FoodCounter(
+                          currentNumber: currentNumber,
+                          onAdd: () => setState(() {
+                                currentNumber++;
+                              }),
+                          onRemove: () {
+                            if (currentNumber != 1) {
+                              setState(() {
+                                currentNumber--;
+                              });
+                            }
+                          })
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage(widget.food.image),
+                                    fit: BoxFit.fill)),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            "Rame Noodles",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Spacer(),
+                          Text(
+                            '400g',
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.grey.shade400),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 20,
+                        color: Colors.grey.shade300,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage(widget.food.image),
+                                    fit: BoxFit.fill)),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            "Rame Noodles",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Spacer(),
+                          Text(
+                            '400g',
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.grey.shade400),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 20,
+                        color: Colors.grey.shade300,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage(widget.food.image),
+                                    fit: BoxFit.fill)),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            "Rame Noodles",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Spacer(),
+                          Text(
+                            '400g',
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.grey.shade400),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 20,
+                        color: Colors.grey.shade300,
+                      ),
+                      const SizedBox(
+                        height: 20,
                       )
                     ],
                   )
