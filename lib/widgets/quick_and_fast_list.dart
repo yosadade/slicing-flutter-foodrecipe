@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodrecipeapp/constants.dart';
 import 'package:foodrecipeapp/models/food.dart';
+import 'package:foodrecipeapp/screens/quick_foods_screen.dart';
 import 'package:iconsax/iconsax.dart';
 
 class QuickAndFastList extends StatelessWidget {
@@ -19,7 +20,13 @@ class QuickAndFastList extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const QuickFoodScreen()),
+                  );
+                },
                 child: Text(
                   'View All',
                   style: TextStyle(color: kprimaryColor),
@@ -91,7 +98,12 @@ class QuickAndFastList extends StatelessWidget {
                                     backgroundColor: Colors.white,
                                     fixedSize: const Size(30, 30)),
                                 iconSize: 20,
-                                icon: const Icon(Iconsax.heart),
+                                icon: foods[index].isLiked
+                                    ? const Icon(
+                                        Iconsax.heart5,
+                                        color: Colors.red,
+                                      )
+                                    : const Icon(Iconsax.heart),
                               ))
                         ],
                       ),
